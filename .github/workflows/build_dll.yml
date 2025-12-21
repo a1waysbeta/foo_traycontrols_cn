@@ -1,4 +1,4 @@
-name: Build Translation DLL
+name: Build DLL
 
 on:
   push:
@@ -11,16 +11,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-x86:
     runs-on: windows-latest
-    strategy:
-      matrix:
-        include:
-          - platform: x64
-            output_path: x64/Release/foo_traycontrols.dll
-          - platform: Win32
-            output_path: Release/foo_traycontrols.dll
-    name: Build ${{ matrix.platform }}
+    name: Build x86
     
     steps:
     - name: Checkout code
@@ -29,12 +22,76 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
-    - name: Build Project
-      run: msbuild foo_traycontrols.vcxproj /p:Configuration=Release /p:Platform=${{ matrix.platform }}
+    - name: Build x86
+      run: msbuild foo_traycontrols.vcxproj /p:Configuration=Release /p:Platform=Win32
 
-    - name: Upload DLL Artifact
+    - name: Upload x86 DLL
       uses: actions/upload-artifact@v4
       with:
-        name: foo_traycontrols_${{ matrix.platform }}
-        path: ${{ matrix.output_path }}
+        name: foo_traycontrols_x86
+        path: Release/foo_traycontrols.dll
         if-no-files-found: error
+
+  build-x64:
+    runs-on: windows-latest
+    name: Build x64
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Build x64
+      run: msbuild foo_traycontrols.vcxproj /p:Configuration=Release /p:Platform=x64
+
+    - name: Upload x64 DLL
+      uses: actions/upload-artifact@v4
+      with:
+        name: foo_traycontrols_x64
+        path: x64/Release/foo_traycontrols.dll
+        if-no-files-found: error
+
+  package:
+    runs-on: windows-latest
+    name: Package Component
+    needs: [build-x86, build-x64]
+    
+    steps:
+    - name: Download x86 DLL
+      uses: actions/download-artifact@v4
+      with:
+        name: foo_traycontrols_x86
+        path: component_temp
+
+    - name: Download x64 DLL
+      uses: actions/download-artifact@v4
+      with:
+        name: foo_traycontrols_x64
+        path: component_temp/x64
+
+    - name: Verify downloaded files
+      run: |
+        echo "Component directory structure before packaging:"
+        dir "component_temp" -Recurse
+        echo ""
+        echo "x86 DLL should be at: component_temp/foo_traycontrols.dll"
+        echo "x64 DLL should be at: component_temp/x64/foo_traycontrols.dll"
+
+    - name: Create .fb2k-component archive
+      run: |
+        # 创建 ZIP 文件并重命名为 .fb2k-component
+        Compress-Archive -Path "component_temp/*" -DestinationPath "foo_traycontrols.fb2k-component" -CompressionLevel Optimal
+
+    - name: Upload Final Component Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: foo_traycontrols_component
+        path: foo_traycontrols.fb2k-component
+        if-no-files-found: error
+
+    - name: Clean up temporary files
+      run: |
+        Remove-Item -Path "component_temp" -Recurse -Force -ErrorAction SilentlyContinue
+        Remove-Item -Path "foo_traycontrols.fb2k-component" -Force -ErrorAction SilentlyContinue
