@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "preferences.h"
 #include "tray_manager.h"
 #include "control_panel.h"
@@ -31,7 +31,7 @@ static cfg_struct_t<LOGFONT> cfg_artist_font(GUID{0x12345692, 0x9abc, 0xdef0, {0
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei");
+    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei UI");
     return lf;
 }());
 static cfg_struct_t<LOGFONT> cfg_track_font(GUID{0x12345693, 0x9abc, 0xdef0, {0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0}}, []() {
@@ -43,7 +43,7 @@ static cfg_struct_t<LOGFONT> cfg_track_font(GUID{0x12345693, 0x9abc, 0xdef0, {0x
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei");
+    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei UI");
     return lf;
 }());
 static cfg_int cfg_use_custom_fonts(GUID{0x12345694, 0x9abc, 0xdef0, {0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0}}, 0);
@@ -58,7 +58,7 @@ static cfg_struct_t<LOGFONT> cfg_cp_artist_font(GUID{0x1234569A, 0x9abc, 0xdef0,
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei");
+    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei UI");
     return lf;
 }());
 static cfg_struct_t<LOGFONT> cfg_cp_track_font(GUID{0x1234569B, 0x9abc, 0xdef0, {0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0}}, []() {
@@ -70,7 +70,7 @@ static cfg_struct_t<LOGFONT> cfg_cp_track_font(GUID{0x1234569B, 0x9abc, 0xdef0, 
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei");
+    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei UI");
     return lf;
 }());
 static cfg_int cfg_cp_use_custom_fonts(GUID{0x1234569D, 0x9abc, 0xdef0, {0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0}}, 0);
@@ -85,7 +85,7 @@ static cfg_struct_t<LOGFONT> cfg_undocked_artist_font(GUID{0x123456A0, 0x9abc, 0
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei");
+    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei UI");
     return lf;
 }());
 static cfg_struct_t<LOGFONT> cfg_undocked_track_font(GUID{0x123456A1, 0x9abc, 0xdef0, {0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0}}, []() {
@@ -97,7 +97,7 @@ static cfg_struct_t<LOGFONT> cfg_undocked_track_font(GUID{0x123456A1, 0x9abc, 0x
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei");
+    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei UI");
     return lf;
 }());
 static cfg_int cfg_undocked_use_custom_fonts(GUID{0x123456A2, 0x9abc, 0xdef0, {0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0}}, 0);
@@ -112,7 +112,7 @@ static cfg_struct_t<LOGFONT> cfg_expanded_artist_font(GUID{0x123456B0, 0x9abc, 0
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei");
+    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei UI");
     return lf;
 }());
 static cfg_struct_t<LOGFONT> cfg_expanded_track_font(GUID{0x123456B1, 0x9abc, 0xdef0, {0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0}}, []() {
@@ -124,7 +124,7 @@ static cfg_struct_t<LOGFONT> cfg_expanded_track_font(GUID{0x123456B1, 0x9abc, 0x
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei");
+    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei UI");
     return lf;
 }());
 static cfg_int cfg_expanded_use_custom_fonts(GUID{0x123456B2, 0x9abc, 0xdef0, {0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0}}, 0);
@@ -139,7 +139,7 @@ static cfg_struct_t<LOGFONT> cfg_compact_artist_font(GUID{0x123456C0, 0x9abc, 0x
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei");
+    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei UI");
     return lf;
 }());
 static cfg_struct_t<LOGFONT> cfg_compact_track_font(GUID{0x123456C1, 0x9abc, 0xdef0, {0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0}}, []() {
@@ -151,7 +151,7 @@ static cfg_struct_t<LOGFONT> cfg_compact_track_font(GUID{0x123456C1, 0x9abc, 0xd
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei");
+    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei UI");
     return lf;
 }());
 static cfg_int cfg_compact_use_custom_fonts(GUID{0x123456C2, 0x9abc, 0xdef0, {0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0}}, 0);
@@ -166,7 +166,7 @@ static cfg_struct_t<LOGFONT> cfg_timer_font(GUID{0x123456D0, 0x9abc, 0xdef0, {0x
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = DEFAULT_QUALITY;
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei");
+    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei UI");
     return lf;
 }());
 static cfg_int cfg_timer_use_custom_font(GUID{0x123456D1, 0x9abc, 0xdef0, {0x12, 0x34, 0x56, 0x78, 0x9a, 0xbc, 0xde, 0xf0}}, 0);
@@ -352,7 +352,7 @@ LOGFONT get_default_font(bool is_artist, int size) {
     lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;
     lf.lfQuality = CLEARTYPE_QUALITY; // Use ClearType for better rendering
     lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
-    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei");
+    wcscpy_s(lf.lfFaceName, L"Microsoft YaHei UI");
     
     // Force no scaling constraints
     lf.lfWidth = 0; // Let Windows calculate width
@@ -445,23 +445,23 @@ INT_PTR CALLBACK tray_preferences::ConfigProc(HWND hwnd, UINT msg, WPARAM wp, LP
         
         // Initialize popup position combobox (6 positions: left and right sides)
         HWND hCombo = GetDlgItem(hwnd, IDC_POPUP_POSITION_COMBO);
-        SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM)L"Top Left");
-        SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM)L"Middle Left");
-        SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM)L"Bottom Left");
-        SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM)L"Top Right");
-        SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM)L"Middle Right");
-        SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM)L"Bottom Right");
+        SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM)L"左上");
+        SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM)L"左中");
+        SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM)L"左下");
+        SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM)L"右上");
+        SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM)L"右中");
+        SendMessage(hCombo, CB_ADDSTRING, 0, (LPARAM)L"右下");
         SendMessage(hCombo, CB_SETCURSEL, cfg_popup_position, 0);
 
         // Initialize popup duration combobox (1-10 seconds)
         HWND hDurationCombo = GetDlgItem(hwnd, IDC_POPUP_DURATION_COMBO);
-        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"1 second");
-        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"2 seconds");
-        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"3 seconds");
-        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"4 seconds");
-        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"5 seconds");
-        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"7 seconds");
-        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"10 seconds");
+        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"1 秒");
+        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"2 秒");
+        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"3 秒");
+        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"4 秒");
+        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"5 秒");
+        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"7 秒");
+        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"10 秒");
         // Convert stored milliseconds to combo index
         int duration_index = 2; // Default to 3 seconds (index 2)
         int stored_duration = cfg_popup_duration;
@@ -476,11 +476,11 @@ INT_PTR CALLBACK tray_preferences::ConfigProc(HWND hwnd, UINT msg, WPARAM wp, LP
 
         // Initialize slide duration combobox
         HWND hSlideDurationCombo = GetDlgItem(hwnd, IDC_SLIDE_DURATION_COMBO);
-        SendMessage(hSlideDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"Very Fast (100ms)");
-        SendMessage(hSlideDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"Fast (200ms)");
-        SendMessage(hSlideDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"Normal (300ms)");
-        SendMessage(hSlideDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"Slow (400ms)");
-        SendMessage(hSlideDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"Very Slow (500ms)");
+        SendMessage(hSlideDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"极快（100毫秒）");
+        SendMessage(hSlideDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"快速（200毫秒）");
+        SendMessage(hSlideDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"正常（300毫秒）");
+        SendMessage(hSlideDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"慢速（400毫秒）");
+        SendMessage(hSlideDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"极慢（500毫秒）");
         
         // Convert stored slide duration to combo index
         int slide_index = 1; // Default to 200ms (index 1)
@@ -494,9 +494,9 @@ INT_PTR CALLBACK tray_preferences::ConfigProc(HWND hwnd, UINT msg, WPARAM wp, LP
         
         // Initialize theme mode combobox
         HWND hThemeModeCombo = GetDlgItem(hwnd, IDC_THEME_MODE_COMBO);
-        SendMessage(hThemeModeCombo, CB_ADDSTRING, 0, (LPARAM)L"Auto");
-        SendMessage(hThemeModeCombo, CB_ADDSTRING, 0, (LPARAM)L"Dark");
-        SendMessage(hThemeModeCombo, CB_ADDSTRING, 0, (LPARAM)L"Light");
+        SendMessage(hThemeModeCombo, CB_ADDSTRING, 0, (LPARAM)L"自动");
+        SendMessage(hThemeModeCombo, CB_ADDSTRING, 0, (LPARAM)L"深色");
+        SendMessage(hThemeModeCombo, CB_ADDSTRING, 0, (LPARAM)L"浅色");
         SendMessage(hThemeModeCombo, CB_SETCURSEL, cfg_theme_mode, 0);
 
         
@@ -733,7 +733,7 @@ void tray_preferences::update_font_displays() {
         pfc::string8 font_desc = format_font_name(lf);
         uSetDlgItemText(m_hwnd, IDC_ARTIST_FONT_DISPLAY, font_desc);
     } else {
-        uSetDlgItemText(m_hwnd, IDC_ARTIST_FONT_DISPLAY, "Segoe UI, 11pt, Regular (Default)");
+        uSetDlgItemText(m_hwnd, IDC_ARTIST_FONT_DISPLAY, "Microsoft YaHei UI, 9pt");
     }
     
     // Update original track font display
@@ -742,7 +742,7 @@ void tray_preferences::update_font_displays() {
         pfc::string8 font_desc = format_font_name(lf);
         uSetDlgItemText(m_hwnd, IDC_TRACK_FONT_DISPLAY, font_desc);
     } else {
-        uSetDlgItemText(m_hwnd, IDC_TRACK_FONT_DISPLAY, "Segoe UI, 14pt, Bold (Default)");
+        uSetDlgItemText(m_hwnd, IDC_TRACK_FONT_DISPLAY, "Microsoft YaHei UI, 11pt");
     }
     
     // Update Docked Control Panel font displays
@@ -755,8 +755,8 @@ void tray_preferences::update_font_displays() {
         pfc::string8 track_desc = format_font_name(track_lf);
         uSetDlgItemText(m_hwnd, IDC_DOCKED_TRACK_DISPLAY, track_desc);
     } else {
-        uSetDlgItemText(m_hwnd, IDC_DOCKED_ARTIST_DISPLAY, "Microsoft YaHei, 9pt (Default)");
-        uSetDlgItemText(m_hwnd, IDC_DOCKED_TRACK_DISPLAY, "Microsoft YaHei, 11pt, Bold (Default)");
+        uSetDlgItemText(m_hwnd, IDC_DOCKED_ARTIST_DISPLAY, "Microsoft YaHei UI, 9pt (Default)");
+        uSetDlgItemText(m_hwnd, IDC_DOCKED_TRACK_DISPLAY, "Microsoft YaHei UI, 11pt, Bold (Default)");
     }
     
     // Update Undocked mode font displays
@@ -769,8 +769,8 @@ void tray_preferences::update_font_displays() {
         pfc::string8 track_desc = format_font_name(track_lf);
         uSetDlgItemText(m_hwnd, IDC_UNDOCKED_TRACK_DISPLAY, track_desc);
     } else {
-        uSetDlgItemText(m_hwnd, IDC_UNDOCKED_ARTIST_DISPLAY, "Microsoft YaHei, 9pt (Default)");
-        uSetDlgItemText(m_hwnd, IDC_UNDOCKED_TRACK_DISPLAY, "Microsoft YaHei, 11pt, Bold (Default)");
+        uSetDlgItemText(m_hwnd, IDC_UNDOCKED_ARTIST_DISPLAY, "Microsoft YaHei UI, 9pt (Default)");
+        uSetDlgItemText(m_hwnd, IDC_UNDOCKED_TRACK_DISPLAY, "Microsoft YaHei UI, 11pt, Bold (Default)");
     }
     
     // Update Expanded mode font displays
@@ -783,8 +783,8 @@ void tray_preferences::update_font_displays() {
         pfc::string8 track_desc = format_font_name(track_lf);
         uSetDlgItemText(m_hwnd, IDC_EXPANDED_TRACK_DISPLAY, track_desc);
     } else {
-        uSetDlgItemText(m_hwnd, IDC_EXPANDED_ARTIST_DISPLAY, "Microsoft YaHei, 9pt (Default)");
-        uSetDlgItemText(m_hwnd, IDC_EXPANDED_TRACK_DISPLAY, "Microsoft YaHei, 11pt, Bold (Default)");
+        uSetDlgItemText(m_hwnd, IDC_EXPANDED_ARTIST_DISPLAY, "Microsoft YaHei UI, 9pt (Default)");
+        uSetDlgItemText(m_hwnd, IDC_EXPANDED_TRACK_DISPLAY, "Microsoft YaHei UI, 11pt, Bold (Default)");
     }
     
     // Update Compact mode font displays
@@ -797,8 +797,8 @@ void tray_preferences::update_font_displays() {
         pfc::string8 track_desc = format_font_name(track_lf);
         uSetDlgItemText(m_hwnd, IDC_COMPACT_TRACK_DISPLAY, track_desc);
     } else {
-        uSetDlgItemText(m_hwnd, IDC_COMPACT_ARTIST_DISPLAY, "Microsoft YaHei, 9pt (Default)");
-        uSetDlgItemText(m_hwnd, IDC_COMPACT_TRACK_DISPLAY, "Microsoft YaHei, 11pt, Bold (Default)");
+        uSetDlgItemText(m_hwnd, IDC_COMPACT_ARTIST_DISPLAY, "Microsoft YaHei UI, 9pt (Default)");
+        uSetDlgItemText(m_hwnd, IDC_COMPACT_TRACK_DISPLAY, "Microsoft YaHei UI, 11pt, Bold (Default)");
     }
     
     // Update Timer font display
@@ -807,7 +807,7 @@ void tray_preferences::update_font_displays() {
         pfc::string8 timer_desc = format_font_name(timer_lf);
         uSetDlgItemText(m_hwnd, IDC_TIMER_FONT_DISPLAY, timer_desc);
     } else {
-        uSetDlgItemText(m_hwnd, IDC_TIMER_FONT_DISPLAY, "Microsoft YaHei, 9pt (Default)");
+        uSetDlgItemText(m_hwnd, IDC_TIMER_FONT_DISPLAY, "Microsoft YaHei UI, 9pt (Default)");
     }
 }
 
@@ -1077,10 +1077,10 @@ void tray_preferences::init_tab_control() {
     TCITEM tie = {};
     tie.mask = TCIF_TEXT;
     
-    tie.pszText = const_cast<LPWSTR>(L"General");
+    tie.pszText = const_cast<LPWSTR>(L"常规");
     TabCtrl_InsertItem(hTab, 0, &tie);
     
-    tie.pszText = const_cast<LPWSTR>(L"Fonts");
+    tie.pszText = const_cast<LPWSTR>(L"字体");
     TabCtrl_InsertItem(hTab, 1, &tie);
     
     // Select first tab
@@ -1177,7 +1177,7 @@ void tray_preferences::switch_tab(int tab) {
 //=============================================================================
 
 const char* tray_preferences_page::get_name() {
-    return "Tray Controls";
+    return u8"托盘控制";
 }
 
 GUID tray_preferences_page::get_guid() {

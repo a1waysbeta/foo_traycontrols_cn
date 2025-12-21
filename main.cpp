@@ -24,16 +24,16 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 
 // Component version declaration using the proper SDK macro
 DECLARE_COMPONENT_VERSION(
-    "Tray Controls",
+    "托盘控制",
     "1.2.8",
-    "System tray controls for foobar2000.\n"
-    "Features:\n"
-    "- Minimize to system tray\n"
-    "- Right-click context menu with playback controls\n"
-    "- Track information tooltips\n\n"
-    "Author: jame25\n"
-    "Build date: " __DATE__ "\n\n"
-    "This component adds system tray functionality to foobar2000."
+    "为 foobar2000 提供系统托盘控制功能。\n"
+    "主要特性：\n"
+    "- 最小化到系统托盘\n"
+    "- 带有播放控制的右键上下文菜单\n"
+    "- 歌曲信息提示工具\n\n"
+    "作者：jame25（汉化：Asion）\n"
+    "编译日期：" __DATE__ "\n\n"
+    "本组件为 foobar2000 增加了系统托盘功能。"
 );
 
 // Validate component compatibility using the proper SDK macro
@@ -84,14 +84,14 @@ public:
     
     void on_playback_pause(bool p_state) override {
         // Update tray tooltip to show pause state
-        tray_manager::get_instance().update_playback_state(p_state ? "Paused" : "Playing");
+        tray_manager::get_instance().update_playback_state(p_state ? "暂停播放" : "正在播放");
         // Update control panel playback state
         control_panel::get_instance().update_track_info();
     }
     
     void on_playback_stop(play_control::t_stop_reason p_reason) override {
         // Update tray tooltip to show stopped state
-        tray_manager::get_instance().update_playback_state("Stopped");
+        tray_manager::get_instance().update_playback_state("停止播放");
         // Update control panel playback state
         control_panel::get_instance().update_track_info();
     }

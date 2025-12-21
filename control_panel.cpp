@@ -539,8 +539,8 @@ void control_panel::update_track_info() {
             pfc::string8 path = track->get_path();
             bool is_stream = strstr(path.get_ptr(), "://") != nullptr;
             
-            m_current_artist = "Unknown Artist";
-            m_current_title = "Unknown Title";
+            m_current_artist = "未知艺术家";
+            m_current_title = "未知标题";
             
             if (is_stream) {
                 // For streaming sources, use titleformat to get what foobar2000 displays
@@ -569,7 +569,7 @@ void control_panel::update_track_info() {
             }
             
             // If titleformat didn't work or not a stream, try basic metadata
-            if (m_current_artist == "Unknown Artist" || m_current_title == "Unknown Title") {
+            if (m_current_artist == "未知艺术家" || m_current_title == "未知标题") {
                 file_info_impl info;
                 if (track->get_info(info)) {
                     const char* artist_str = info.meta_get("ARTIST", 0);
@@ -580,10 +580,10 @@ void control_panel::update_track_info() {
                     
                     // For streams, try additional fallbacks
                     if (is_stream) {
-                        if (m_current_title == "Unknown Title" && info.meta_exists("server")) {
+                        if (m_current_title == "未知标题" && info.meta_exists("server")) {
                             m_current_title = info.meta_get("server", 0);
                         }
-                        if (m_current_title == "Unknown Title" && info.meta_exists("SERVER")) {
+                        if (m_current_title == "未知标题" && info.meta_exists("SERVER")) {
                             m_current_title = info.meta_get("SERVER", 0);
                         }
                     }
@@ -593,7 +593,7 @@ void control_panel::update_track_info() {
             // Get track length
             m_track_length = track->get_length();
         } else {
-            m_current_artist = "No track";
+            m_current_artist = "未播放";
             m_current_title = "";
             m_track_length = 0.0;
         }
@@ -651,7 +651,7 @@ void control_panel::update_track_info() {
         }
         
     } catch (...) {
-        m_current_artist = "Error";
+        m_current_artist = "错误";
         m_current_title = "";
         m_is_playing = false;
         m_is_paused = false;
@@ -2274,12 +2274,12 @@ void control_panel::handle_button_click(int button_id) {
                     
                     for (t_size i = 0; i < order_count; i++) {
                         const char* name = playlist_api->playback_order_get_name(i);
-                        if (strstr(name, "Shuffle") || strstr(name, "shuffle") || strstr(name, "Random")) {
+                        if (strstr(name, "乱序") || strstr(name, "乱序") || strstr(name, "随机")) {
                             shuffle_index = i;
                             found_shuffle = true;
                             break;
                         }
-                        if (strcmp(name, "Default") == 0 || i == 0) {
+                        if (strcmp(name, "默认") == 0 || i == 0) {
                             default_index = i;
                         }
                     }
@@ -2317,12 +2317,12 @@ void control_panel::handle_button_click(int button_id) {
                     
                     for (t_size i = 0; i < order_count; i++) {
                         const char* name = playlist_api->playback_order_get_name(i);
-                        if (strcmp(name, "Default") == 0) {
+                        if (strcmp(name, "默认") == 0) {
                             default_index = i;
-                        } else if (strcmp(name, "Repeat (playlist)") == 0 || strcmp(name, "Repeat") == 0) {
+                        } else if (strcmp(name, "重复(播放列表)") == 0 || strcmp(name, "重复") == 0) {
                             repeat_playlist_index = i;
                             found_repeat_playlist = true;
-                        } else if (strcmp(name, "Repeat (track)") == 0 || strcmp(name, "Repeat (one)") == 0 || strcmp(name, "Repeat (1)") == 0) {
+                        } else if (strcmp(name, "重复(音轨)") == 0 || strcmp(name, "重复(音轨)") == 0 || strcmp(name, "重复(音轨)") == 0) {
                             repeat_track_index = i;
                             found_repeat_track = true;
                         }
@@ -2370,15 +2370,15 @@ void control_panel::update_playback_order_state() {
         const char* order_name = playlist_api->playback_order_get_name(current_order);
         
         // Check if current order is a shuffle mode
-        m_shuffle_active = (strstr(order_name, "Shuffle") != nullptr || 
-                           strstr(order_name, "shuffle") != nullptr ||
-                           strstr(order_name, "Random") != nullptr);
+        m_shuffle_active = (strstr(order_name, "乱序") != nullptr || 
+                           strstr(order_name, "乱序") != nullptr ||
+                           strstr(order_name, "随机") != nullptr);
         
         // Check if current order is a repeat mode
         m_repeat_mode = 0; // Default off
-        if (strcmp(order_name, "Repeat (track)") == 0 || strcmp(order_name, "Repeat (one)") == 0 || strcmp(order_name, "Repeat (1)") == 0) {
+        if (strcmp(order_name, "重复(音轨)") == 0 || strcmp(order_name, "重复(音轨)") == 0 || strcmp(order_name, "重复(音轨)") == 0) {
             m_repeat_mode = 2; // Track repeat
-        } else if (strstr(order_name, "Repeat") != nullptr || strstr(order_name, "repeat") != nullptr) {
+        } else if (strstr(order_name, "重复") != nullptr || strstr(order_name, "重复") != nullptr) {
             m_repeat_mode = 1; // Playlist repeat (default fallback for any other repeat string)
         }
     } catch (...) {
@@ -4486,7 +4486,7 @@ void control_panel::draw_track_info(HDC hdc, const RECT& client_rect, int art_si
         // Draw track title using larger, bold font
         HFONT title_font_to_use = m_track_font ? m_track_font : CreateFont(get_dpi_scaled_font_height(14), 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
                                                                            DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                                                                           DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI");
+                                                                           DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft Yahei UI");
         HFONT old_font = (HFONT)SelectObject(hdc, title_font_to_use);
         
         RECT title_rect = {text_left, 20, text_right, 45};
@@ -4496,7 +4496,7 @@ void control_panel::draw_track_info(HDC hdc, const RECT& client_rect, int art_si
         // Draw artist using smaller, normal font
         HFONT artist_font_to_use = m_artist_font ? m_artist_font : CreateFont(get_dpi_scaled_font_height(11), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
                                                                               DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                                                                              DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI");
+                                                                              DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft Yahei UI");
         
         
         SelectObject(hdc, artist_font_to_use);
@@ -4518,7 +4518,7 @@ void control_panel::draw_track_info(HDC hdc, const RECT& client_rect, int art_si
         // Draw track title using custom or default font
         HFONT font_to_use = m_track_font ? m_track_font : CreateFont(get_dpi_scaled_font_height(14), 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
                                                                      DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                                                                     DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI");
+                                                                     DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft Yahei UI");
         HFONT old_font = (HFONT)SelectObject(hdc, font_to_use);
         
         RECT title_rect = {text_left, 20, text_right, 45};
@@ -4528,7 +4528,7 @@ void control_panel::draw_track_info(HDC hdc, const RECT& client_rect, int art_si
         // Draw artist using custom or default font
         HFONT artist_font_to_use = m_artist_font ? m_artist_font : CreateFont(get_dpi_scaled_font_height(11), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
                                                                               DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                                                                              DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI");
+                                                                              DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft Yahei UI");
         
         
         SelectObject(hdc, artist_font_to_use);
@@ -4667,7 +4667,7 @@ void control_panel::paint_compact_mode(HDC hdc, const RECT& rect) {
     if (!title_font) {
         title_font = CreateFont(get_dpi_scaled_font_height(15), 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
                                   DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                                  DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft YaHei");
+                                  DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft YaHei UI");
         need_delete_title = true;
     }
     HFONT old_font = (HFONT)SelectObject(hdc, title_font);
@@ -4682,7 +4682,7 @@ void control_panel::paint_compact_mode(HDC hdc, const RECT& rect) {
     if (!artist_font) {
         artist_font = CreateFont(get_dpi_scaled_font_height(12), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
                                    DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                                   DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft YaHei");
+                                   DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft YaHei UI");
         need_delete_artist = true;
     }
     SelectObject(hdc, artist_font);
@@ -4808,7 +4808,7 @@ void control_panel::draw_track_info_overlay(HDC hdc, int window_width, int windo
     if (!title_font) {
         title_font = CreateFont(get_dpi_scaled_font_height(20), 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
                                  DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                                 DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI");
+                                 DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft Yahei UI");
         need_delete_title = true;
     }
     HFONT old_font = (HFONT)SelectObject(hdc, title_font);
@@ -4820,7 +4820,7 @@ void control_panel::draw_track_info_overlay(HDC hdc, int window_width, int windo
         pfc::stringcvt::string_wide_from_utf8 wide_title(m_current_title.c_str());
         DrawText(hdc, wide_title.get_ptr(), -1, &title_rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS);
     } else {
-        DrawText(hdc, L"[No Track Title]", -1, &title_rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS);
+        DrawText(hdc, L"[无标题]", -1, &title_rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS);
     }
     
     SelectObject(hdc, old_font);
@@ -4834,7 +4834,7 @@ void control_panel::draw_track_info_overlay(HDC hdc, int window_width, int windo
     if (!artist_font) {
         artist_font = CreateFont(get_dpi_scaled_font_height(14), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
                                   DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                                  DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI");
+                                  DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft Yahei UI");
         need_delete_artist = true;
     }
     old_font = (HFONT)SelectObject(hdc, artist_font);
@@ -4846,7 +4846,7 @@ void control_panel::draw_track_info_overlay(HDC hdc, int window_width, int windo
         pfc::stringcvt::string_wide_from_utf8 wide_artist(m_current_artist.c_str());
         DrawText(hdc, wide_artist.get_ptr(), -1, &artist_rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS);
     } else {
-        DrawText(hdc, L"[No Artist]", -1, &artist_rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS);
+        DrawText(hdc, L"[无艺术家]", -1, &artist_rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS);
     }
     
         SelectObject(hdc, old_font);

@@ -580,8 +580,8 @@ void popup_window::draw_track_info(HDC hdc, const RECT& client_rect) {
     if (!hdc) return;
     
     // Get track info from stored track or current playing track
-    pfc::string8 artist = "Unknown Artist";
-    pfc::string8 title = "Unknown Title";
+    pfc::string8 artist = "未知艺术家";
+    pfc::string8 title = "未知标题";
     
     try {
         metadb_handle_ptr track = m_current_track;
@@ -629,7 +629,7 @@ void popup_window::draw_track_info(HDC hdc, const RECT& client_rect) {
             }
             
             // If titleformat didn't work or not a stream, try basic metadata
-            if ((artist == "Unknown Artist" || title == "Unknown Title")) {
+            if ((artist == "未知艺术家" || title == "未知标题")) {
                 file_info_impl info;
                 if (track->get_info(info)) {
                     const char* artist_str = info.meta_get("ARTIST", 0);
@@ -640,10 +640,10 @@ void popup_window::draw_track_info(HDC hdc, const RECT& client_rect) {
                     
                     // For streams, try additional fallbacks
                     if (is_stream) {
-                        if (title == "Unknown Title" && info.meta_exists("server")) {
+                        if (title == "未知标题" && info.meta_exists("server")) {
                             title = info.meta_get("server", 0);
                         }
-                        if (title == "Unknown Title" && info.meta_exists("SERVER")) {
+                        if (title == "未知标题" && info.meta_exists("SERVER")) {
                             title = info.meta_get("SERVER", 0);
                         }
                     }
@@ -672,10 +672,10 @@ void popup_window::draw_track_info(HDC hdc, const RECT& client_rect) {
         // Default fonts matching Docked Control Panel defaults (9pt artist, 11pt track)
         title_font = CreateFont(get_dpi_scaled_font_height(11), 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
                                 DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                                DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft YaHei");
+                                DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft YaHei UI");
         artist_font = CreateFont(get_dpi_scaled_font_height(9), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
                                  DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                                 DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft YaHei");
+                                 DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft YaHei UI");
     }
     
     // Draw title first (top line)

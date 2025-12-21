@@ -1,4 +1,4 @@
-#include "resource.h"
+﻿#include "resource.h"
 #include <windows.h>
 
 // Tray icon
@@ -25,71 +25,71 @@ BEGIN
     CONTROL         "", IDC_TAB_CONTROL, "SysTabControl32", 0, 7, 7, 286, 286
 
     // === General Tab Controls (shown by default) ===
-    CONTROL         "Always minimize to system tray", IDC_ALWAYS_MINIMIZE_TO_TRAY, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 15, 35, 200, 10
-    CONTROL         "When enabled, clicking minimize sends foobar2000 directly to the system tray.", IDC_STATIC_MINIMIZE_HELP, "Static", SS_LEFT | SS_NOPREFIX, 15, 50, 270, 8
-    CONTROL         "Mouse wheel over tray icon adjusts volume.", IDC_STATIC_WHEEL_HELP, "Static", SS_LEFT | SS_NOPREFIX, 15, 62, 270, 8
-    CONTROL         "Show popup notification on track change", IDC_SHOW_POPUP_NOTIFICATION, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 15, 80, 200, 10
-    LTEXT           "Position:", IDC_POPUP_POSITION_LABEL, 15, 98, 35, 10
+    CONTROL         "始终最小化到系统托盘", IDC_ALWAYS_MINIMIZE_TO_TRAY, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 15, 35, 200, 10
+    CONTROL         "启用后，点击最小化按钮将直接把 foobar2000 最小化到系统托盘。", IDC_STATIC_MINIMIZE_HELP, "Static", SS_LEFT | SS_NOPREFIX, 15, 50, 270, 8
+    CONTROL         "在托盘图标上滚动鼠标滚轮可调整音量。", IDC_STATIC_WHEEL_HELP, "Static", SS_LEFT | SS_NOPREFIX, 15, 62, 270, 8
+    CONTROL         "在歌曲切换时显示弹出通知", IDC_SHOW_POPUP_NOTIFICATION, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 15, 80, 200, 10
+    LTEXT           "位置：", IDC_POPUP_POSITION_LABEL, 15, 98, 30, 10
     COMBOBOX        IDC_POPUP_POSITION_COMBO, 55, 96, 80, 120, CBS_DROPDOWNLIST | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Duration:", IDC_POPUP_DURATION_LABEL, 145, 98, 35, 10
+    LTEXT           "显示时长：", IDC_POPUP_DURATION_LABEL, 145, 98, 65, 10
     COMBOBOX        IDC_POPUP_DURATION_COMBO, 185, 96, 60, 100, CBS_DROPDOWNLIST | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Disable MiniPlayer", IDC_DISABLE_MINIPLAYER, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 15, 120, 200, 10
-    CONTROL         "When enabled, prevents the control panel from being undocked (dragged).", IDC_STATIC_MINIPLAYER_HELP, "Static", SS_LEFT | SS_NOPREFIX, 15, 135, 270, 8
+    CONTROL         "禁用迷你播放器", IDC_DISABLE_MINIPLAYER, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 15, 120, 200, 10
+    CONTROL         "启用后，迷你面板将锁定当前位置（贴边/悬浮），无法拖动。", IDC_STATIC_MINIPLAYER_HELP, "Static", SS_LEFT | SS_NOPREFIX, 15, 135, 270, 8
     
     // Slide-to-Side Options
-    CONTROL         "Disable Slide-to-Side", IDC_DISABLE_SLIDE_TO_SIDE, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 15, 150, 200, 10
-    LTEXT           "Slide Animation:", IDC_SLIDE_DURATION_LABEL, 15, 168, 50, 10
+    CONTROL         "禁用贴边隐藏", IDC_DISABLE_SLIDE_TO_SIDE, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 15, 150, 200, 10
+    LTEXT           "隐藏动画：", IDC_SLIDE_DURATION_LABEL, 15, 168, 50, 10
     COMBOBOX        IDC_SLIDE_DURATION_COMBO, 70, 166, 80, 100, CBS_DROPDOWNLIST | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Always Slide-to-Side", IDC_ALWAYS_SLIDE_TO_SIDE, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 15, 182, 200, 10
+    CONTROL         "始终启用贴边隐藏", IDC_ALWAYS_SLIDE_TO_SIDE, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 15, 182, 200, 10
 
     // Window Style Options
-    CONTROL         "Use rounded corners (Windows 11 only)", IDC_USE_ROUNDED_CORNERS, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 15, 197, 200, 10
-    LTEXT           "Theme Mode:", IDC_THEME_MODE_LABEL, 15, 215, 50, 10
+    CONTROL         "使用圆角窗口（仅限 Windows 11）", IDC_USE_ROUNDED_CORNERS, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 15, 197, 200, 10
+    LTEXT           "主题模式：", IDC_THEME_MODE_LABEL, 15, 215, 50, 10
     COMBOBOX        IDC_THEME_MODE_COMBO, 70, 213, 40, 100, CBS_DROPDOWNLIST | CBS_HASSTRINGS | WS_VSCROLL | WS_TABSTOP
 
 
     // === Fonts Tab Controls (hidden initially) ===
     
     // Docked Control Panel section
-    LTEXT           "Docked Control Panel", IDC_DOCKED_TITLE, 15, 35, 120, 10
-    LTEXT           "Artist Font:", IDC_DOCKED_ARTIST_LABEL, 25, 50, 45, 10
+    LTEXT           "停靠模式", IDC_DOCKED_TITLE, 15, 35, 120, 10
+    LTEXT           "艺术家字体：", IDC_DOCKED_ARTIST_LABEL, 25, 50, 55, 10
     EDITTEXT        IDC_DOCKED_ARTIST_DISPLAY, 75, 48, 130, 14, ES_READONLY | WS_BORDER
-    PUSHBUTTON      "Select...", IDC_DOCKED_ARTIST_SELECT, 215, 47, 50, 16
-    LTEXT           "Track Font:", IDC_DOCKED_TRACK_LABEL, 25, 68, 45, 10
+    PUSHBUTTON      "选择...", IDC_DOCKED_ARTIST_SELECT, 215, 47, 50, 16
+    LTEXT           "标题字体：", IDC_DOCKED_TRACK_LABEL, 25, 68, 55, 10
     EDITTEXT        IDC_DOCKED_TRACK_DISPLAY, 75, 66, 130, 14, ES_READONLY | WS_BORDER
-    PUSHBUTTON      "Select...", IDC_DOCKED_TRACK_SELECT, 215, 65, 50, 16
+    PUSHBUTTON      "选择...", IDC_DOCKED_TRACK_SELECT, 215, 65, 50, 16
 
     // Undocked Control Panel section
-    LTEXT           "Undocked Control Panel", IDC_UNDOCKED_TITLE, 15, 90, 120, 10
-    LTEXT           "Artist Font:", IDC_UNDOCKED_ARTIST_LABEL, 25, 105, 45, 10
+    LTEXT           "悬浮模式", IDC_UNDOCKED_TITLE, 15, 90, 120, 10
+    LTEXT           "艺术家字体：", IDC_UNDOCKED_ARTIST_LABEL, 25, 105, 55, 10
     EDITTEXT        IDC_UNDOCKED_ARTIST_DISPLAY, 75, 103, 130, 14, ES_READONLY | WS_BORDER
-    PUSHBUTTON      "Select...", IDC_UNDOCKED_ARTIST_SELECT, 215, 102, 50, 16
-    LTEXT           "Track Font:", IDC_UNDOCKED_TRACK_LABEL, 25, 123, 45, 10
+    PUSHBUTTON      "选择...", IDC_UNDOCKED_ARTIST_SELECT, 215, 102, 50, 16
+    LTEXT           "标题字体：", IDC_UNDOCKED_TRACK_LABEL, 25, 123, 55, 10
     EDITTEXT        IDC_UNDOCKED_TRACK_DISPLAY, 75, 121, 130, 14, ES_READONLY | WS_BORDER
-    PUSHBUTTON      "Select...", IDC_UNDOCKED_TRACK_SELECT, 215, 120, 50, 16
+    PUSHBUTTON      "选择...", IDC_UNDOCKED_TRACK_SELECT, 215, 120, 50, 16
 
     // Expanded Control Panel section
-    LTEXT           "Expanded Artwork Mode", IDC_EXPANDED_TITLE, 15, 145, 120, 10
-    LTEXT           "Artist Font:", IDC_EXPANDED_ARTIST_LABEL, 25, 160, 45, 10
+    LTEXT           "扩展封面模式", IDC_EXPANDED_TITLE, 15, 145, 120, 10
+    LTEXT           "艺术家字体：", IDC_EXPANDED_ARTIST_LABEL, 25, 160, 55, 10
     EDITTEXT        IDC_EXPANDED_ARTIST_DISPLAY, 75, 158, 130, 14, ES_READONLY | WS_BORDER
-    PUSHBUTTON      "Select...", IDC_EXPANDED_ARTIST_SELECT, 215, 157, 50, 16
-    LTEXT           "Track Font:", IDC_EXPANDED_TRACK_LABEL, 25, 178, 45, 10
+    PUSHBUTTON      "选择...", IDC_EXPANDED_ARTIST_SELECT, 215, 157, 50, 16
+    LTEXT           "标题字体：", IDC_EXPANDED_TRACK_LABEL, 25, 178, 55, 10
     EDITTEXT        IDC_EXPANDED_TRACK_DISPLAY, 75, 176, 130, 14, ES_READONLY | WS_BORDER
-    PUSHBUTTON      "Select...", IDC_EXPANDED_TRACK_SELECT, 215, 175, 50, 16
+    PUSHBUTTON      "选择...", IDC_EXPANDED_TRACK_SELECT, 215, 175, 50, 16
 
     // Compact Control Panel section
-    LTEXT           "Compact Mode", IDC_COMPACT_TITLE, 15, 200, 120, 10
-    LTEXT           "Artist Font:", IDC_COMPACT_ARTIST_LABEL, 25, 215, 45, 10
+    LTEXT           "紧凑模式", IDC_COMPACT_TITLE, 15, 200, 120, 10
+    LTEXT           "艺术家字体：", IDC_COMPACT_ARTIST_LABEL, 25, 215, 55, 10
     EDITTEXT        IDC_COMPACT_ARTIST_DISPLAY, 75, 213, 130, 14, ES_READONLY | WS_BORDER
-    PUSHBUTTON      "Select...", IDC_COMPACT_ARTIST_SELECT, 215, 212, 50, 16
-    LTEXT           "Track Font:", IDC_COMPACT_TRACK_LABEL, 25, 233, 45, 10
+    PUSHBUTTON      "选择...", IDC_COMPACT_ARTIST_SELECT, 215, 212, 50, 16
+    LTEXT           "标题字体：", IDC_COMPACT_TRACK_LABEL, 25, 233, 55, 10
     EDITTEXT        IDC_COMPACT_TRACK_DISPLAY, 75, 231, 130, 14, ES_READONLY | WS_BORDER
-    PUSHBUTTON      "Select...", IDC_COMPACT_TRACK_SELECT, 215, 230, 50, 16
+    PUSHBUTTON      "选择...", IDC_COMPACT_TRACK_SELECT, 215, 230, 50, 16
 
     // Timer Display section (shared across Docked, Undocked, Compact)
-    LTEXT           "Timer Display", IDC_TIMER_TITLE, 15, 255, 120, 10
-    LTEXT           "Timer Font:", IDC_TIMER_FONT_LABEL, 25, 270, 45, 10
+    LTEXT           "时间显示", IDC_TIMER_TITLE, 15, 255, 120, 10
+    LTEXT           "时间字体：", IDC_TIMER_FONT_LABEL, 25, 270, 45, 10
     EDITTEXT        IDC_TIMER_FONT_DISPLAY, 75, 268, 130, 14, ES_READONLY | WS_BORDER
-    PUSHBUTTON      "Select...", IDC_TIMER_FONT_SELECT, 215, 267, 50, 16
+    PUSHBUTTON      "选择...", IDC_TIMER_FONT_SELECT, 215, 267, 50, 16
 
 END

@@ -14,7 +14,7 @@ static mainmenu_group_popup_factory g_traycontrols_menu_group(
     guid_traycontrols_menu_group, 
     mainmenu_groups::view, 
     mainmenu_commands::sort_priority_dontcare, 
-    "Tray Controls"
+    "托盘控制"
 );
 
 // Mainmenu commands implementation
@@ -38,7 +38,7 @@ public:
     
     void get_name(t_uint32 p_index, pfc::string_base & p_out) override {
         switch(p_index) {
-            case cmd_launch_miniplayer: p_out = "Launch MiniPlayer"; break;
+            case cmd_launch_miniplayer: p_out = "启动迷你播放器"; break;
             default: uBugCheck();
         }
     }
@@ -46,7 +46,7 @@ public:
     bool get_description(t_uint32 p_index, pfc::string_base & p_out) override {
         switch(p_index) {
             case cmd_launch_miniplayer: 
-                p_out = "Opens the MiniPlayer in Undocked mode at its previous position."; 
+                p_out = "以悬浮模式显示迷你播放器，并恢复至上一次的位置。"; 
                 return true;
             default: 
                 return false;

@@ -1,4 +1,4 @@
-// tray_manager.cpp - Implementation of the system tray functionality
+﻿// tray_manager.cpp - Implementation of the system tray functionality
 
 #include "stdafx.h"
 #include "tray_manager.h"
@@ -83,7 +83,7 @@ void tray_manager::initialize() {
         // Fallback to default application icon
         m_nid.hIcon = LoadIcon(nullptr, IDI_APPLICATION);
     }
-    wcscpy_s(m_nid.szTip, L"foobar2000 - Tray Controls");
+    wcscpy_s(m_nid.szTip, L"foobar2000 - 托盘控制");
 
     // Add tray icon immediately - always visible
     Shell_NotifyIcon(NIM_ADD, &m_nid);
@@ -111,11 +111,11 @@ void tray_manager::initialize() {
                 update_tooltip(track);
             } else {
                 // If no track info available, show playback state
-                update_playback_state("Playing");
+                update_playback_state("正在播放");
             }
         } else {
             // Not playing, show stopped state
-            update_playback_state("Stopped");
+            update_playback_state("停止播放");
         }
     } catch (...) {
         // Keep default tooltip if anything fails
@@ -183,7 +183,7 @@ bool tray_manager::create_tray_window() {
     m_tray_window = CreateWindowEx(
         0,
         L"TrayControlsWindow",
-        L"Tray Controls",
+        L"托盘控制",
         0,
         0, 0, 0, 0,
         HWND_MESSAGE,  // Message-only window
@@ -197,7 +197,7 @@ bool tray_manager::create_tray_window() {
 void tray_manager::update_tooltip(metadb_handle_ptr p_track) {
     if (!m_initialized || !p_track.is_valid()) {
         // Default tooltip if no valid track
-        wcscpy_s(m_nid.szTip, L"foobar2000 - No Track");
+        wcscpy_s(m_nid.szTip, L"foobar2000 - 未播放");
         if (m_tray_added) {
             Shell_NotifyIcon(NIM_MODIFY, &m_nid);
         }
@@ -297,12 +297,12 @@ void tray_manager::update_tooltip(metadb_handle_ptr p_track) {
                     if (strcmp(url_part.get_ptr(), "aac") == 0 || 
                         strcmp(url_part.get_ptr(), "mp3") == 0 || 
                         strcmp(url_part.get_ptr(), "ogg") == 0) {
-                        title = "Internet Radio Stream";
+                        title = "网络电台";
                     } else {
                         title = url_part;
                     }
                 } else {
-                    title = "Internet Radio Stream";
+                    title = "网络电台";
                 }
             }
         }
@@ -324,14 +324,14 @@ void tray_manager::update_tooltip(metadb_handle_ptr p_track) {
                 if (url_filename) {
                     tooltip = url_filename + 1;
                 } else {
-                    tooltip = "Unknown Track";
+                    tooltip = "未知曲目";
                 }
             }
         }
         
         // Ensure we have some text
         if (tooltip.is_empty()) {
-            tooltip = "foobar2000 - Playing";
+            tooltip = "foobar2000 - 正在播放";
         }
         
         // Convert to wide string and update tooltip
@@ -346,7 +346,7 @@ void tray_manager::update_tooltip(metadb_handle_ptr p_track) {
     }
     catch (...) {
         // Fallback tooltip
-        wcscpy_s(m_nid.szTip, L"foobar2000 - Error");
+        wcscpy_s(m_nid.szTip, L"foobar2000 - 错误");
         if (m_tray_added) {
             Shell_NotifyIcon(NIM_MODIFY, &m_nid);
         }
@@ -422,7 +422,7 @@ void tray_manager::update_tooltip_with_dynamic_info(const file_info & p_info) {
     }
     catch (...) {
         // Fallback tooltip
-        wcscpy_s(m_nid.szTip, L"foobar2000 - Playing");
+        wcscpy_s(m_nid.szTip, L"foobar2000 - 正在播放");
         if (m_tray_added) {
             Shell_NotifyIcon(NIM_MODIFY, &m_nid);
         }
@@ -517,12 +517,12 @@ void tray_manager::show_context_menu(int x, int y) {
     auto& panel = control_panel::get_instance();
     bool miniplayer_visible = panel.get_control_window() && IsWindowVisible(panel.get_control_window()) &&
                               (panel.is_undocked() || panel.is_artwork_expanded() || panel.is_compact_mode());
-    AppendMenu(menu, MF_STRING, IDM_TOGGLE_MINIPLAYER, miniplayer_visible ? L"Close MiniPlayer" : L"Open MiniPlayer");
+    AppendMenu(menu, MF_STRING, IDM_TOGGLE_MINIPLAYER, miniplayer_visible ? L"关闭迷你播放器" : L"打开迷你播放器");
     
     // Show appropriate menu item based on foobar2000 window visibility
     bool is_visible = IsWindowVisible(m_main_window);
-    AppendMenu(menu, MF_STRING, IDM_RESTORE, is_visible ? L"Hide foobar2000" : L"Show foobar2000");
-    AppendMenu(menu, MF_STRING, IDM_EXIT, L"Exit");
+    AppendMenu(menu, MF_STRING, IDM_RESTORE, is_visible ? L"隐藏 foobar2000" : L"显示 foobar2000");
+    AppendMenu(menu, MF_STRING, IDM_EXIT, L"退出");
     
     // Ensure the menu appears in front
     SetForegroundWindow(m_main_window);
@@ -589,12 +589,12 @@ void tray_manager::force_update_tooltip() {
         // Method 2: Get playback state and show that
         if (pc->is_playing()) {
             if (pc->is_paused()) {
-                update_playback_state("Paused");
+                update_playback_state("暂停播放");
             } else {
-                update_playback_state("Playing");
+                update_playback_state("正在播放");
             }
         } else {
-            update_playback_state("Stopped");
+            update_playback_state("停止播放");
         }
         
         // Method 3: Show debug info
@@ -834,7 +834,7 @@ void tray_manager::check_for_track_changes() {
             if (!m_last_track_path.is_empty()) {
                 m_last_track_path = "";
                 m_last_track_metadata = "";
-                update_playback_state("Stopped");
+                update_playback_state("停止播放");
             }
         }
     } catch (...) {
