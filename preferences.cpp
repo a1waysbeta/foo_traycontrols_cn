@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "preferences.h"
 #include "tray_manager.h"
 #include "control_panel.h"
@@ -756,24 +756,24 @@ INT_PTR CALLBACK tray_preferences::ConfigProc(HWND hwnd, UINT msg, WPARAM wp, LP
 
         // Initialize general tab comboboxes
         HWND hPosCombo = GetDlgItem(hwnd, IDC_POPUP_POSITION_COMBO);
-        SendMessage(hPosCombo, CB_ADDSTRING, 0, (LPARAM)L"Top Left");
-        SendMessage(hPosCombo, CB_ADDSTRING, 0, (LPARAM)L"Middle Left");
-        SendMessage(hPosCombo, CB_ADDSTRING, 0, (LPARAM)L"Bottom Left");
-        SendMessage(hPosCombo, CB_ADDSTRING, 0, (LPARAM)L"Top Right");
-        SendMessage(hPosCombo, CB_ADDSTRING, 0, (LPARAM)L"Middle Right");
-        SendMessage(hPosCombo, CB_ADDSTRING, 0, (LPARAM)L"Bottom Right");
+        SendMessage(hPosCombo, CB_ADDSTRING, 0, (LPARAM)L"左上");
+        SendMessage(hPosCombo, CB_ADDSTRING, 0, (LPARAM)L"左中");
+        SendMessage(hPosCombo, CB_ADDSTRING, 0, (LPARAM)L"左下");
+        SendMessage(hPosCombo, CB_ADDSTRING, 0, (LPARAM)L"右上");
+        SendMessage(hPosCombo, CB_ADDSTRING, 0, (LPARAM)L"右中");
+        SendMessage(hPosCombo, CB_ADDSTRING, 0, (LPARAM)L"右下");
         int pos = cfg_popup_position;
         if (pos < 0 || pos > 5) pos = 0;
         SendMessage(hPosCombo, CB_SETCURSEL, pos, 0);
 
         HWND hDurationCombo = GetDlgItem(hwnd, IDC_POPUP_DURATION_COMBO);
-        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"1 second");
-        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"2 seconds");
-        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"3 seconds");
-        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"4 seconds");
-        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"5 seconds");
-        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"7 seconds");
-        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"10 seconds");
+        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"1 秒");
+        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"2 秒");
+        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"3 秒");
+        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"4 秒");
+        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"5 秒");
+        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"7 秒");
+        SendMessage(hDurationCombo, CB_ADDSTRING, 0, (LPARAM)L"10 秒");
 
         int duration_index = 2; // Default 3s
         if (cfg_popup_duration == 1000) duration_index = 0;
@@ -786,11 +786,11 @@ INT_PTR CALLBACK tray_preferences::ConfigProc(HWND hwnd, UINT msg, WPARAM wp, LP
         SendMessage(hDurationCombo, CB_SETCURSEL, duration_index, 0);
 
         HWND hSlideCombo = GetDlgItem(hwnd, IDC_SLIDE_DURATION_COMBO);
-        SendMessage(hSlideCombo, CB_ADDSTRING, 0, (LPARAM)L"Instant (100 ms)");
-        SendMessage(hSlideCombo, CB_ADDSTRING, 0, (LPARAM)L"Fast (200 ms)");
-        SendMessage(hSlideCombo, CB_ADDSTRING, 0, (LPARAM)L"Normal (300 ms)");
-        SendMessage(hSlideCombo, CB_ADDSTRING, 0, (LPARAM)L"Smooth (400 ms)");
-        SendMessage(hSlideCombo, CB_ADDSTRING, 0, (LPARAM)L"Slow (500 ms)");
+        SendMessage(hSlideCombo, CB_ADDSTRING, 0, (LPARAM)L"即时（100毫秒）");
+        SendMessage(hSlideCombo, CB_ADDSTRING, 0, (LPARAM)L"快速（200毫秒）");
+        SendMessage(hSlideCombo, CB_ADDSTRING, 0, (LPARAM)L"正常（300毫秒）");
+        SendMessage(hSlideCombo, CB_ADDSTRING, 0, (LPARAM)L"平滑（400毫秒）");
+        SendMessage(hSlideCombo, CB_ADDSTRING, 0, (LPARAM)L"慢速（500毫秒）");
 
         int slide_index = 1; // Default 200ms
         if (cfg_slide_duration == 100) slide_index = 0;
@@ -810,59 +810,59 @@ INT_PTR CALLBACK tray_preferences::ConfigProc(HWND hwnd, UINT msg, WPARAM wp, LP
 
         // Initialize appearance tab comboboxes
         HWND hThemeCombo = GetDlgItem(hwnd, IDC_THEME_MODE_COMBO);
-        SendMessage(hThemeCombo, CB_ADDSTRING, 0, (LPARAM)L"Auto");
-        SendMessage(hThemeCombo, CB_ADDSTRING, 0, (LPARAM)L"Dark");
-        SendMessage(hThemeCombo, CB_ADDSTRING, 0, (LPARAM)L"Light");
+        SendMessage(hThemeCombo, CB_ADDSTRING, 0, (LPARAM)L"自动");
+        SendMessage(hThemeCombo, CB_ADDSTRING, 0, (LPARAM)L"深色");
+        SendMessage(hThemeCombo, CB_ADDSTRING, 0, (LPARAM)L"浅色");
         SendMessage(hThemeCombo, CB_SETCURSEL, cfg_theme_mode, 0);
 
         HWND hCoverArtCombo = GetDlgItem(hwnd, IDC_COVER_ARTWORK_COMBO);
-        SendMessage(hCoverArtCombo, CB_ADDSTRING, 0, (LPARAM)L"Yes");
-        SendMessage(hCoverArtCombo, CB_ADDSTRING, 0, (LPARAM)L"No");
+        SendMessage(hCoverArtCombo, CB_ADDSTRING, 0, (LPARAM)L"显示");
+        SendMessage(hCoverArtCombo, CB_ADDSTRING, 0, (LPARAM)L"隐藏");
         SendMessage(hCoverArtCombo, CB_SETCURSEL, (cfg_show_cover_art != 0) ? 0 : 1, 0);
 
         HWND hCoverMarginCombo = GetDlgItem(hwnd, IDC_COVER_MARGIN_COMBO);
-        SendMessage(hCoverMarginCombo, CB_ADDSTRING, 0, (LPARAM)L"Yes");
-        SendMessage(hCoverMarginCombo, CB_ADDSTRING, 0, (LPARAM)L"No");
+        SendMessage(hCoverMarginCombo, CB_ADDSTRING, 0, (LPARAM)L"启用");
+        SendMessage(hCoverMarginCombo, CB_ADDSTRING, 0, (LPARAM)L"禁用");
         SendMessage(hCoverMarginCombo, CB_SETCURSEL, (cfg_cover_margin != 0) ? 0 : 1, 0);
 
         HWND hCoverStyleCombo = GetDlgItem(hwnd, IDC_COVER_STYLE_COMBO);
-        SendMessage(hCoverStyleCombo, CB_ADDSTRING, 0, (LPARAM)L"Square");
-        SendMessage(hCoverStyleCombo, CB_ADDSTRING, 0, (LPARAM)L"Rounded");
+        SendMessage(hCoverStyleCombo, CB_ADDSTRING, 0, (LPARAM)L"直角");
+        SendMessage(hCoverStyleCombo, CB_ADDSTRING, 0, (LPARAM)L"圆角");
         SendMessage(hCoverStyleCombo, CB_SETCURSEL, cfg_cover_style, 0);
 
         HWND hBgStyleCombo = GetDlgItem(hwnd, IDC_BACKGROUND_STYLE_COMBO);
-        SendMessage(hBgStyleCombo, CB_ADDSTRING, 0, (LPARAM)L"Solid");
-        SendMessage(hBgStyleCombo, CB_ADDSTRING, 0, (LPARAM)L"Artwork Colors");
-        SendMessage(hBgStyleCombo, CB_ADDSTRING, 0, (LPARAM)L"Blurred Artwork");
+        SendMessage(hBgStyleCombo, CB_ADDSTRING, 0, (LPARAM)L"纯色");
+        SendMessage(hBgStyleCombo, CB_ADDSTRING, 0, (LPARAM)L"专辑封面颜色");
+        SendMessage(hBgStyleCombo, CB_ADDSTRING, 0, (LPARAM)L"模糊专辑封面");
         SendMessage(hBgStyleCombo, CB_SETCURSEL, cfg_background_style, 0);
 
         HWND hMiniPlayerBorderCombo = GetDlgItem(hwnd, IDC_MINIPLAYER_BORDER_COMBO);
         SendMessage(hMiniPlayerBorderCombo, CB_RESETCONTENT, 0, 0);
-        SendMessage(hMiniPlayerBorderCombo, CB_ADDSTRING, 0, (LPARAM)L"Square");
-        SendMessage(hMiniPlayerBorderCombo, CB_ADDSTRING, 0, (LPARAM)L"Rounded");
+        SendMessage(hMiniPlayerBorderCombo, CB_ADDSTRING, 0, (LPARAM)L"直角");
+        SendMessage(hMiniPlayerBorderCombo, CB_ADDSTRING, 0, (LPARAM)L"圆角");
         SendMessage(hMiniPlayerBorderCombo, CB_SETCURSEL, cfg_miniplayer_border_style, 0);
 
         HWND hTickerSpeedCombo = GetDlgItem(hwnd, IDC_TICKER_SPEED_COMBO);
         SendMessage(hTickerSpeedCombo, CB_RESETCONTENT, 0, 0);
-        SendMessage(hTickerSpeedCombo, CB_ADDSTRING, 0, (LPARAM)L"Off");
-        SendMessage(hTickerSpeedCombo, CB_ADDSTRING, 0, (LPARAM)L"Slowest");
-        SendMessage(hTickerSpeedCombo, CB_ADDSTRING, 0, (LPARAM)L"Slow");
-        SendMessage(hTickerSpeedCombo, CB_ADDSTRING, 0, (LPARAM)L"Fast");
-        SendMessage(hTickerSpeedCombo, CB_ADDSTRING, 0, (LPARAM)L"Fastest");
+        SendMessage(hTickerSpeedCombo, CB_ADDSTRING, 0, (LPARAM)L"关闭");
+        SendMessage(hTickerSpeedCombo, CB_ADDSTRING, 0, (LPARAM)L"最慢");
+        SendMessage(hTickerSpeedCombo, CB_ADDSTRING, 0, (LPARAM)L"慢速");
+        SendMessage(hTickerSpeedCombo, CB_ADDSTRING, 0, (LPARAM)L"快速");
+        SendMessage(hTickerSpeedCombo, CB_ADDSTRING, 0, (LPARAM)L"最快");
         SendMessage(hTickerSpeedCombo, CB_SETCURSEL, cfg_ticker_speed, 0);
 
         // Initialize icons tab comboboxes
         HWND hHoverCirclesCombo = GetDlgItem(hwnd, IDC_HOVER_CIRCLES_COMBO);
         SendMessage(hHoverCirclesCombo, CB_RESETCONTENT, 0, 0);
-        SendMessage(hHoverCirclesCombo, CB_ADDSTRING, 0, (LPARAM)L"Show");
-        SendMessage(hHoverCirclesCombo, CB_ADDSTRING, 0, (LPARAM)L"Hide");
+        SendMessage(hHoverCirclesCombo, CB_ADDSTRING, 0, (LPARAM)L"显示");
+        SendMessage(hHoverCirclesCombo, CB_ADDSTRING, 0, (LPARAM)L"隐藏");
         SendMessage(hHoverCirclesCombo, CB_SETCURSEL, (cfg_hover_circles != 0) ? 0 : 1, 0);
 
         HWND hAltIconsCombo = GetDlgItem(hwnd, IDC_ALTERNATIVE_ICONS_COMBO);
         SendMessage(hAltIconsCombo, CB_RESETCONTENT, 0, 0);
-        SendMessage(hAltIconsCombo, CB_ADDSTRING, 0, (LPARAM)L"Style 1");
-        SendMessage(hAltIconsCombo, CB_ADDSTRING, 0, (LPARAM)L"Style 2");
-        SendMessage(hAltIconsCombo, CB_ADDSTRING, 0, (LPARAM)L"Style 3");
+        SendMessage(hAltIconsCombo, CB_ADDSTRING, 0, (LPARAM)L"样式 1");
+        SendMessage(hAltIconsCombo, CB_ADDSTRING, 0, (LPARAM)L"样式 2");
+        SendMessage(hAltIconsCombo, CB_ADDSTRING, 0, (LPARAM)L"样式 3");
         SendMessage(hAltIconsCombo, CB_SETCURSEL, cfg_alternative_icons, 0);
 
         CheckDlgButton(hwnd, IDC_SHOW_VOLUME_FEEDBACK, cfg_show_volume_feedback ? BST_CHECKED : BST_UNCHECKED);
@@ -876,10 +876,10 @@ INT_PTR CALLBACK tray_preferences::ConfigProc(HWND hwnd, UINT msg, WPARAM wp, LP
 
         // Initialize MiniPlayer Undocked size combobox and edit fields
         HWND hUndockedPresetCombo = GetDlgItem(hwnd, IDC_MINIPLAYER_UNDOCKED_PRESET_COMBO);
-        SendMessage(hUndockedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"Normal / Default (400 x 120 px)");
-        SendMessage(hUndockedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"Large (480 x 140 px)");
-        SendMessage(hUndockedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"Wide (540 x 120 px)");
-        SendMessage(hUndockedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"Custom");
+        SendMessage(hUndockedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"正常 / 默认（400 x 120 像素）");
+        SendMessage(hUndockedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"大（480 x 140 像素）");
+        SendMessage(hUndockedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"宽（540 x 120 像素）");
+        SendMessage(hUndockedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"自定义");
 
         int u_w = cfg_miniplayer_undocked_width;
         int u_h = cfg_miniplayer_undocked_height;
@@ -893,11 +893,11 @@ INT_PTR CALLBACK tray_preferences::ConfigProc(HWND hwnd, UINT msg, WPARAM wp, LP
 
         // Initialize MiniPlayer Compact size combobox and edit fields
         HWND hCompactPresetCombo = GetDlgItem(hwnd, IDC_MINIPLAYER_COMPACT_PRESET_COMBO);
-        SendMessage(hCompactPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"Small (280 x 60 px)");
-        SendMessage(hCompactPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"Normal / Default (320 x 75 px)");
-        SendMessage(hCompactPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"Large (380 x 90 px)");
-        SendMessage(hCompactPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"Wide (440 x 75 px)");
-        SendMessage(hCompactPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"Custom");
+        SendMessage(hCompactPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"小（280 x 60 像素）");
+        SendMessage(hCompactPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"正常 / 默认（320 x 75 像素）");
+        SendMessage(hCompactPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"大（380 x 90 像素）");
+        SendMessage(hCompactPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"宽（440 x 75 像素）");
+        SendMessage(hCompactPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"自定义");
 
         int c_w = cfg_miniplayer_compact_width;
         int c_h = cfg_miniplayer_compact_height;
@@ -912,11 +912,11 @@ INT_PTR CALLBACK tray_preferences::ConfigProc(HWND hwnd, UINT msg, WPARAM wp, LP
 
         // Initialize MiniPlayer Expanded size combobox and edit fields
         HWND hExpandedPresetCombo = GetDlgItem(hwnd, IDC_MINIPLAYER_EXPANDED_PRESET_COMBO);
-        SendMessage(hExpandedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"Small (250 x 250 px)");
-        SendMessage(hExpandedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"Normal / Default (350 x 350 px)");
-        SendMessage(hExpandedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"Large (450 x 450 px)");
-        SendMessage(hExpandedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"Extra Large (550 x 550 px)");
-        SendMessage(hExpandedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"Custom");
+        SendMessage(hExpandedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"小（250 x 250 像素）");
+        SendMessage(hExpandedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"正常 / 默认（350 x 350 像素）");
+        SendMessage(hExpandedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"大（450 x 450 像素）");
+        SendMessage(hExpandedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"超大（550 x 550 像素）");
+        SendMessage(hExpandedPresetCombo, CB_ADDSTRING, 0, (LPARAM)L"自定义");
 
         int e_s = cfg_miniplayer_expanded_size;
         int e_preset = 4; // Custom
@@ -1946,19 +1946,19 @@ void tray_preferences::init_tab_control() {
     TCITEM tie = {};
     tie.mask = TCIF_TEXT;
     
-    tie.pszText = const_cast<LPWSTR>(L"General");
+    tie.pszText = const_cast<LPWSTR>(L"常规");
     TabCtrl_InsertItem(hTab, 0, &tie);
     
-    tie.pszText = const_cast<LPWSTR>(L"Appearance");
+    tie.pszText = const_cast<LPWSTR>(L"外观");
     TabCtrl_InsertItem(hTab, 1, &tie);
 
-    tie.pszText = const_cast<LPWSTR>(L"Icons");
+    tie.pszText = const_cast<LPWSTR>(L"图标");
     TabCtrl_InsertItem(hTab, 2, &tie);
 
-    tie.pszText = const_cast<LPWSTR>(L"MiniPlayer");
+    tie.pszText = const_cast<LPWSTR>(L"迷你播放器");
     TabCtrl_InsertItem(hTab, 3, &tie);
     
-    tie.pszText = const_cast<LPWSTR>(L"Fonts");
+    tie.pszText = const_cast<LPWSTR>(L"字体");
     TabCtrl_InsertItem(hTab, 4, &tie);
     
     // Select first tab
@@ -2135,7 +2135,7 @@ void tray_preferences::switch_tab(int tab) {
 //=============================================================================
 
 const char* tray_preferences_page::get_name() {
-    return "Tray Controls";
+    return u8"托盘控制";
 }
 
 GUID tray_preferences_page::get_guid() {

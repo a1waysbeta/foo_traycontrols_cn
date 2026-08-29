@@ -743,8 +743,8 @@ void control_panel::update_track_info(metadb_handle_ptr p_track) {
             }
 
             if (is_stream && (!m_last_stream_title.is_empty() || !m_last_stream_artist.is_empty())) {
-                m_current_title = m_last_stream_title.is_empty() ? "Unknown Title" : m_last_stream_title;
-                m_current_artist = m_last_stream_artist.is_empty() ? "Unknown Artist" : m_last_stream_artist;
+                m_current_title = m_last_stream_title.is_empty() ? "未知标题" : m_last_stream_title;
+                m_current_artist = m_last_stream_artist.is_empty() ? "未知艺术家" : m_last_stream_artist;
             } else {
                 if (!is_stream) {
                     m_last_stream_title.reset();
@@ -803,8 +803,8 @@ void control_panel::update_track_info(metadb_handle_ptr p_track) {
                     }
                 }
 
-                if (m_current_title.is_empty()) m_current_title = "Unknown Title";
-                if (m_current_artist.is_empty()) m_current_artist = "Unknown Artist";
+                if (m_current_title.is_empty()) m_current_title = "未知标题";
+                if (m_current_artist.is_empty()) m_current_artist = "未知艺术家";
             }
             
             // Get track length
@@ -873,7 +873,7 @@ void control_panel::update_track_info(metadb_handle_ptr p_track) {
         }
         
     } catch (...) {
-        m_current_artist = "Error";
+        m_current_artist = "错误";
         m_current_title = "";
         m_is_playing = false;
         m_is_paused = false;
@@ -1049,8 +1049,8 @@ void control_panel::update_stream_metadata(const file_info & p_info) {
 
         m_last_stream_artist = artist;
         m_last_stream_title = title;
-        m_current_artist = artist.is_empty() ? "Unknown Artist" : artist;
-        m_current_title = title.is_empty() ? "Unknown Title" : title;
+        m_current_artist = artist.is_empty() ? "未知艺术家" : artist;
+        m_current_title = title.is_empty() ? "未知标题" : title;
 
         // Request new artwork from foo_artwork
         if (is_artwork_bridge_available() && !is_bypass_stream()) {
@@ -1180,11 +1180,11 @@ void control_panel::on_online_artwork_received() {
                     m_last_loaded_track = track;
                     pfc::string8 line1, line2;
                     format_display_lines_track(track, line1, line2);
-                    if (!line1.is_empty() && line1 != "Unknown Title") {
+                    if (!line1.is_empty() && line1 != "未知标题") {
                         m_current_title = line1;
                         m_last_stream_title = line1;
                     }
-                    if (!line2.is_empty() && line2 != "Unknown Artist") {
+                    if (!line2.is_empty() && line2 != "未知艺术家") {
                         m_current_artist = line2;
                         m_last_stream_artist = line2;
                     }
@@ -3308,10 +3308,10 @@ void control_panel::handle_button_click(int button_id) {
                     // First pass: look specifically for "Shuffle (tracks)" or "Shuffle"
                     for (t_size i = 0; i < order_count; i++) {
                         const char* name = playlist_api->playback_order_get_name(i);
-                        if (strcmp(name, "Default") == 0) {
+                        if (strcmp(name, "默认") == 0) {
                             default_index = i;
                         }
-                        if (strcmp(name, "Shuffle (tracks)") == 0 || strcmp(name, "Shuffle") == 0) {
+                        if (strcmp(name, "乱序(音轨)") == 0 || strcmp(name, "乱序") == 0) {
                             shuffle_index = i;
                             found_shuffle = true;
                             break;
@@ -3322,7 +3322,7 @@ void control_panel::handle_button_click(int button_id) {
                     if (!found_shuffle) {
                         for (t_size i = 0; i < order_count; i++) {
                             const char* name = playlist_api->playback_order_get_name(i);
-                            if (strstr(name, "Shuffle") || strstr(name, "shuffle")) {
+                            if (strstr(name, "乱序") || strstr(name, "乱序")) {
                                 shuffle_index = i;
                                 found_shuffle = true;
                                 break;
@@ -3369,12 +3369,12 @@ void control_panel::handle_button_click(int button_id) {
                     
                     for (t_size i = 0; i < order_count; i++) {
                         const char* name = playlist_api->playback_order_get_name(i);
-                        if (strcmp(name, "Default") == 0) {
+                        if (strcmp(name, "默认") == 0) {
                             default_index = i;
-                        } else if (strcmp(name, "Repeat (playlist)") == 0 || strcmp(name, "Repeat") == 0) {
+                        } else if (strcmp(name, "重复(播放列表)") == 0 || strcmp(name, "重复") == 0) {
                             repeat_playlist_index = i;
                             found_repeat_playlist = true;
-                        } else if (strcmp(name, "Repeat (track)") == 0 || strcmp(name, "Repeat (one)") == 0 || strcmp(name, "Repeat (1)") == 0) {
+                        } else if (strcmp(name, "重复(音轨)") == 0 || strcmp(name, "重复(音轨)") == 0 || strcmp(name, "重复(音轨)") == 0) {
                             repeat_track_index = i;
                             found_repeat_track = true;
                         }
@@ -3422,15 +3422,15 @@ void control_panel::update_playback_order_state() {
         const char* order_name = playlist_api->playback_order_get_name(current_order);
         
         // Check if current order is a shuffle mode
-        m_shuffle_active = (strstr(order_name, "Shuffle") != nullptr || 
-                           strstr(order_name, "shuffle") != nullptr ||
-                           strstr(order_name, "Random") != nullptr);
+        m_shuffle_active = (strstr(order_name, "乱序") != nullptr || 
+                           strstr(order_name, "乱序") != nullptr ||
+                           strstr(order_name, "随机") != nullptr);
         
         // Check if current order is a repeat mode
         m_repeat_mode = 0; // Default off
-        if (strcmp(order_name, "Repeat (track)") == 0 || strcmp(order_name, "Repeat (one)") == 0 || strcmp(order_name, "Repeat (1)") == 0) {
+        if (strcmp(order_name, "重复(音轨)") == 0 || strcmp(order_name, "重复(音轨)") == 0 || strcmp(order_name, "重复(音轨)") == 0) {
             m_repeat_mode = 2; // Track repeat
-        } else if (strstr(order_name, "Repeat") != nullptr || strstr(order_name, "repeat") != nullptr) {
+        } else if (strstr(order_name, "重复") != nullptr || strstr(order_name, "重复") != nullptr) {
             m_repeat_mode = 1; // Playlist repeat (default fallback for any other repeat string)
         }
     } catch (...) {
@@ -5946,7 +5946,7 @@ void control_panel::draw_track_info(HDC hdc, const RECT& client_rect, int art_si
         // Draw track title using larger, bold font
         HFONT title_font_to_use = m_track_font ? m_track_font : CreateFont(get_dpi_scaled_font_height(14), 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
                                                                            DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                                                                           DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI");
+                                                                           DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft Yahei UI");
         HFONT old_font = (HFONT)SelectObject(hdc, title_font_to_use);
         
         RECT title_rect = {text_left, 20, text_right, 45};
@@ -5956,7 +5956,7 @@ void control_panel::draw_track_info(HDC hdc, const RECT& client_rect, int art_si
         // Draw artist using smaller, normal font
         HFONT artist_font_to_use = m_artist_font ? m_artist_font : CreateFont(get_dpi_scaled_font_height(11), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
                                                                               DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                                                                              DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI");
+                                                                              DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft Yahei UI");
         
         RECT artist_rect = {text_left, 50, text_right, 70};
         update_artist_ticker(hdc, m_current_artist, artist_font_to_use, artist_rect, m_text_dim_color);
@@ -5974,7 +5974,7 @@ void control_panel::draw_track_info(HDC hdc, const RECT& client_rect, int art_si
         // Draw track title using custom or default font
         HFONT font_to_use = m_track_font ? m_track_font : CreateFont(get_dpi_scaled_font_height(14), 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
                                                                      DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                                                                     DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI");
+                                                                     DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft Yahei UI");
         HFONT old_font = (HFONT)SelectObject(hdc, font_to_use);
         
         RECT title_rect = {text_left, 20, text_right, 45};
@@ -5984,7 +5984,7 @@ void control_panel::draw_track_info(HDC hdc, const RECT& client_rect, int art_si
         // Draw artist using custom or default font
         HFONT artist_font_to_use = m_artist_font ? m_artist_font : CreateFont(get_dpi_scaled_font_height(11), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE,
                                                                               DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
-                                                                              DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Segoe UI");
+                                                                              DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"Microsoft Yahei UI");
         
         RECT artist_rect = {text_left, 50, text_right, 70};
         update_artist_ticker(hdc, m_current_artist, artist_font_to_use, artist_rect, m_text_dim_color);
@@ -6293,7 +6293,7 @@ void control_panel::draw_track_info_overlay(HDC hdc, int window_width, int windo
             pfc::stringcvt::string_wide_from_utf8 wide_title(m_current_title.c_str());
             DrawText(hdc, wide_title.get_ptr(), -1, &title_rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS | DT_NOPREFIX);
         } else {
-            DrawText(hdc, L"[No Track Title]", -1, &title_rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS | DT_NOPREFIX);
+            DrawText(hdc, L"[无标题]", -1, &title_rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS | DT_NOPREFIX);
         }
         SelectObject(hdc, old_font);
 
@@ -6305,7 +6305,7 @@ void control_panel::draw_track_info_overlay(HDC hdc, int window_width, int windo
             pfc::stringcvt::string_wide_from_utf8 wide_artist(m_current_artist.c_str());
             DrawText(hdc, wide_artist.get_ptr(), -1, &artist_rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS | DT_NOPREFIX);
         } else {
-            DrawText(hdc, L"[No Artist]", -1, &artist_rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS | DT_NOPREFIX);
+            DrawText(hdc, L"[无艺术家]", -1, &artist_rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS | DT_NOPREFIX);
         }
         SelectObject(hdc, old_font);
     } // End of should_draw_overlay condition

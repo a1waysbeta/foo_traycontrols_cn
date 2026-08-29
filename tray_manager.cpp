@@ -1,4 +1,4 @@
-// tray_manager.cpp - Implementation of the system tray functionality
+﻿// tray_manager.cpp - Implementation of the system tray functionality
 
 #include "stdafx.h"
 #include "tray_manager.h"
@@ -87,7 +87,7 @@ void tray_manager::initialize() {
         // Fallback to default application icon
         m_nid.hIcon = LoadIcon(nullptr, IDI_APPLICATION);
     }
-    wcsncpy_s(m_nid.szTip, _countof(m_nid.szTip), L"foobar2000 - Tray Controls", _TRUNCATE);
+    wcsncpy_s(m_nid.szTip, _countof(m_nid.szTip), L"foobar2000 - 托盘控制", _TRUNCATE);
 
     // Add tray icon immediately - always visible
     Shell_NotifyIcon(NIM_ADD, &m_nid);
@@ -188,7 +188,7 @@ bool tray_manager::create_tray_window() {
     m_tray_window = CreateWindowEx(
         0,
         L"TrayControlsWindow",
-        L"Tray Controls",
+        L"托盘控制",
         WS_POPUP,
         0, 0, 0, 0,
         nullptr,
@@ -248,7 +248,7 @@ static bool is_remote_stream_path(const char* path) {
 
 void tray_manager::update_tooltip(metadb_handle_ptr p_track) {
     if (!m_initialized || !p_track.is_valid()) {
-        wcsncpy_s(m_nid.szTip, _countof(m_nid.szTip), L"foobar2000 - No Track", _TRUNCATE);
+        wcsncpy_s(m_nid.szTip, _countof(m_nid.szTip), L"foobar2000 - 未播放", _TRUNCATE);
         if (m_tray_added) {
             m_nid.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
             Shell_NotifyIcon(NIM_MODIFY, &m_nid);
@@ -290,7 +290,7 @@ void tray_manager::update_tooltip(metadb_handle_ptr p_track) {
             } else if (!line2.is_empty()) {
                 tooltip = line2;
             } else {
-                tooltip = "foobar2000 - Playing";
+                tooltip = "foobar2000 - 正在播放";
             }
         }
 
@@ -308,7 +308,7 @@ void tray_manager::update_tooltip(metadb_handle_ptr p_track) {
         }
     }
     catch (...) {
-        wcsncpy_s(m_nid.szTip, _countof(m_nid.szTip), L"foobar2000 - Error", _TRUNCATE);
+        wcsncpy_s(m_nid.szTip, _countof(m_nid.szTip), L"foobar2000 - 错误", _TRUNCATE);
         m_nid.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
         if (m_tray_added) {
             Shell_NotifyIcon(NIM_MODIFY, &m_nid);
@@ -331,7 +331,7 @@ void tray_manager::update_tooltip_from_playback() {
         } else if (!line2.is_empty()) {
             tooltip = line2;
         } else {
-            tooltip = "foobar2000 - Playing";
+            tooltip = "foobar2000 - 正在播放";
         }
 
         if (tooltip == m_last_track_metadata && !tooltip.is_empty()) {
@@ -528,7 +528,7 @@ void tray_manager::update_tooltip_with_dynamic_info(const file_info & p_info) {
     }
     catch (...) {
         // Fallback tooltip
-        wcsncpy_s(m_nid.szTip, _countof(m_nid.szTip), L"foobar2000 - Playing", _TRUNCATE);
+        wcsncpy_s(m_nid.szTip, _countof(m_nid.szTip), L"foobar2000 - 正在播放", _TRUNCATE);
         m_nid.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
         if (m_tray_added) {
             Shell_NotifyIcon(NIM_MODIFY, &m_nid);
@@ -554,8 +554,12 @@ void tray_manager::update_playback_state(const char* state) {
         m_last_loaded_track = nullptr;
     }
 
+    const char* display = state;
+    if (strcmp(state, "Playing") == 0) display = "正在播放";
+    else if (strcmp(state, "Paused") == 0) display = "已暂停";
+    else if (strcmp(state, "Stopped") == 0) display = "已停止";
     pfc::string8 tooltip = "foobar2000 - ";
-    tooltip += state;
+    tooltip += display;
     
     pfc::stringcvt::string_wide_from_utf8 wide_tooltip(tooltip.get_ptr());
     wcsncpy_s(m_nid.szTip, _countof(m_nid.szTip), wide_tooltip.get_ptr(), _TRUNCATE);
@@ -651,18 +655,18 @@ void tray_manager::show_context_menu(int x, int y) {
     
     // Show/Hide foobar2000 main window menu item
     bool main_window_visible = m_main_window && IsWindowVisible(m_main_window);
-    AppendMenu(menu, MF_STRING, IDM_RESTORE, main_window_visible ? L"Hide foobar2000" : L"Show foobar2000");
+    AppendMenu(menu, MF_STRING, IDM_RESTORE, main_window_visible ? L"隐藏 foobar2000" : L"显示 foobar2000");
     AppendMenu(menu, MF_SEPARATOR, 0, nullptr);
 
     // Show MiniPlayer toggle menu item
     auto& panel = control_panel::get_instance();
     bool miniplayer_visible = panel.get_control_window() && IsWindowVisible(panel.get_control_window()) &&
                               (panel.is_undocked() || panel.is_artwork_expanded() || panel.is_compact_mode());
-    AppendMenu(menu, MF_STRING, IDM_TOGGLE_MINIPLAYER, miniplayer_visible ? L"Close MiniPlayer" : L"Open MiniPlayer");
+    AppendMenu(menu, MF_STRING, IDM_TOGGLE_MINIPLAYER, miniplayer_visible ? L"关闭迷你播放器" : L"打开迷你播放器");
     AppendMenu(menu, MF_SEPARATOR, 0, nullptr);
-    AppendMenu(menu, MF_STRING, IDM_SETTINGS, L"Settings");
+    AppendMenu(menu, MF_STRING, IDM_SETTINGS, L"设置");
     AppendMenu(menu, MF_SEPARATOR, 0, nullptr);
-    AppendMenu(menu, MF_STRING, IDM_EXIT, L"Exit");
+    AppendMenu(menu, MF_STRING, IDM_EXIT, L"退出");
     
     // Ensure the menu appears in front
     SetForegroundWindow(m_main_window);
@@ -755,7 +759,7 @@ void tray_manager::force_update_tooltip() {
         }
         
     } catch (...) {
-        wcsncpy_s(m_nid.szTip, _countof(m_nid.szTip), L"Debug: Exception occurred", _TRUNCATE);
+        wcsncpy_s(m_nid.szTip, _countof(m_nid.szTip), L"调试信息：发生异常", _TRUNCATE);
         if (m_tray_added) {
             Shell_NotifyIcon(NIM_MODIFY, &m_nid);
         }

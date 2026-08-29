@@ -507,19 +507,19 @@ void popup_window::update_track_info(metadb_handle_ptr p_track) {
         }
     }
 
-    if (m_current_title.is_empty()) m_current_title = "Unknown Title";
-    if (m_current_artist.is_empty()) m_current_artist = "Unknown Artist";
+    if (m_current_title.is_empty()) m_current_title = "未知标题";
+    if (m_current_artist.is_empty()) m_current_artist = "未知艺术家";
     
     if (m_is_stream) {
         // If stream has valid discovered track title (not raw URL or placeholder)
         bool has_valid_title = !m_current_title.is_empty() && 
-                               m_current_title != "Unknown Title" && 
+                               m_current_title != "未知标题" && 
                                m_current_title.find_first("http://") != 0 && 
                                m_current_title.find_first("https://") != 0;
         
         if (has_valid_title) {
             pfc::string8 stream_id;
-            if (!m_current_artist.is_empty() && m_current_artist != "Unknown Artist") {
+            if (!m_current_artist.is_empty() && m_current_artist != "未知艺术家") {
                 stream_id << m_current_artist << " - " << m_current_title;
             } else {
                 stream_id = m_current_title;
@@ -706,8 +706,8 @@ void popup_window::update_stream_metadata(const file_info & p_info) {
         if (stream_id == m_last_track_path) return;
         m_last_track_path = stream_id;
 
-        m_current_title = title.is_empty() ? "Unknown Title" : title;
-        m_current_artist = artist.is_empty() ? "Unknown Artist" : artist;
+        m_current_title = title.is_empty() ? "未知标题" : title;
+        m_current_artist = artist.is_empty() ? "未知艺术家" : artist;
         m_is_stream = true;
 
         // Show popup notification for stream track change
@@ -745,20 +745,20 @@ void popup_window::on_online_artwork_received() {
             if (playback->get_now_playing(track) && track.is_valid()) {
                 pfc::string8 line1, line2;
                 format_display_lines_track(track, line1, line2);
-                if (!line1.is_empty() && line1 != "Unknown Title") m_current_title = line1;
-                if (!line2.is_empty() && line2 != "Unknown Artist") m_current_artist = line2;
+                if (!line1.is_empty() && line1 != "未知标题") m_current_title = line1;
+                if (!line2.is_empty() && line2 != "未知艺术家") m_current_artist = line2;
 
                 pfc::string8 path = track->get_path();
                 if (is_remote_stream_path(path.get_ptr())) {
                     pfc::string8 stream_id;
-                    if (!m_current_artist.is_empty() && m_current_artist != "Unknown Artist") {
+                    if (!m_current_artist.is_empty() && m_current_artist != "未知艺术家") {
                         stream_id << m_current_artist << " - " << m_current_title;
                     } else {
                         stream_id = m_current_title;
                     }
 
                     bool has_valid_title = !m_current_title.is_empty() && 
-                                           m_current_title != "Unknown Title" && 
+                                           m_current_title != "未知标题" && 
                                            m_current_title.find_first("http://") != 0 && 
                                            m_current_title.find_first("https://") != 0;
 
@@ -1461,8 +1461,8 @@ void popup_window::draw_track_info(HDC hdc, const RECT& client_rect) {
     pfc::string8 title = m_current_title;
     pfc::string8 artist = m_current_artist;
 
-    if (title.is_empty()) title = "Unknown Title";
-    if (artist.is_empty()) artist = "Unknown Artist";
+    if (title.is_empty()) title = "未知标题";
+    if (artist.is_empty()) artist = "未知艺术家";
     
     // Setup text colors based on theme mode and background style
     bool is_dark = is_popup_dark_mode();
