@@ -74,7 +74,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
@@ -91,14 +91,14 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <AdditionalDependencies>foobar2000_SDK.lib;pfc.lib;shared.lib;shell32.lib;user32.lib;winmm.lib;ole32.lib;gdi32.lib;gdiplus.lib;shlwapi.lib;comdlg32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>lib/foobar2000_SDK/foobar2000/SDK/$(Configuration);lib/foobar2000_SDK/pfc/$(Configuration);lib/foobar2000_SDK/foobar2000/shared/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>foobar2000_SDK.lib;pfc.lib;shared-Win32.lib;shell32.lib;user32.lib;winmm.lib;ole32.lib;gdi32.lib;gdiplus.lib;shlwapi.lib;comdlg32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>lib/foobar2000_SDK/foobar2000/SDK/x86/foobar2000_SDK;lib/foobar2000_SDK/pfc/x86/pfc;lib/foobar2000_SDK/foobar2000/shared</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>foo_traycontrols.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
@@ -121,8 +121,8 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <AdditionalDependencies>foobar2000_SDK.lib;pfc.lib;shared.lib;shell32.lib;user32.lib;winmm.lib;ole32.lib;gdi32.lib;gdiplus.lib;shlwapi.lib;comdlg32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>lib/foobar2000_SDK/foobar2000/SDK/$(Configuration);lib/foobar2000_SDK/pfc/$(Configuration);lib/foobar2000_SDK/foobar2000/shared/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>foobar2000_SDK.lib;pfc.lib;shared-Win32.lib;shell32.lib;user32.lib;winmm.lib;ole32.lib;gdi32.lib;gdiplus.lib;shlwapi.lib;comdlg32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>lib/foobar2000_SDK/foobar2000/SDK/x86/foobar2000_SDK;lib/foobar2000_SDK/pfc/x86/pfc;lib/foobar2000_SDK/foobar2000/shared</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>foo_traycontrols.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
@@ -130,7 +130,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
@@ -147,14 +147,14 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <AdditionalDependencies>foobar2000_SDK.lib;pfc.lib;shared.lib;shell32.lib;user32.lib;winmm.lib;ole32.lib;gdi32.lib;gdiplus.lib;shlwapi.lib;comdlg32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>lib/foobar2000_SDK/foobar2000/SDK/x64/$(Configuration);lib/foobar2000_SDK/pfc/x64/$(Configuration);lib/foobar2000_SDK/foobar2000/shared/x64/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>foobar2000_SDK.lib;pfc.lib;shared-x64.lib;shell32.lib;user32.lib;winmm.lib;ole32.lib;gdi32.lib;gdiplus.lib;shlwapi.lib;comdlg32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>lib/foobar2000_SDK/foobar2000/SDK/x64/foobar2000_SDK;lib/foobar2000_SDK/pfc/x64/pfc;lib/foobar2000_SDK/foobar2000/shared</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>foo_traycontrols.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
@@ -177,8 +177,8 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <AdditionalDependencies>foobar2000_SDK.lib;pfc.lib;shared.lib;shell32.lib;user32.lib;winmm.lib;ole32.lib;gdi32.lib;gdiplus.lib;shlwapi.lib;comdlg32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>lib/foobar2000_SDK/foobar2000/SDK/x64/$(Configuration);lib/foobar2000_SDK/pfc/x64/$(Configuration);lib/foobar2000_SDK/foobar2000/shared/x64/$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>foobar2000_SDK.lib;pfc.lib;shared-x64.lib;shell32.lib;user32.lib;winmm.lib;ole32.lib;gdi32.lib;gdiplus.lib;shlwapi.lib;comdlg32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>lib/foobar2000_SDK/foobar2000/SDK/x64/foobar2000_SDK;lib/foobar2000_SDK/pfc/x64/pfc;lib/foobar2000_SDK/foobar2000/shared</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>foo_traycontrols.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
