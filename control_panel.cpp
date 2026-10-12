@@ -743,8 +743,8 @@ void control_panel::update_track_info(metadb_handle_ptr p_track) {
             }
 
             if (is_stream && (!m_last_stream_title.is_empty() || !m_last_stream_artist.is_empty())) {
-                m_current_title = m_last_stream_title.is_empty() ? "未知标题" : m_last_stream_title;
-                m_current_artist = m_last_stream_artist.is_empty() ? "未知艺术家" : m_last_stream_artist;
+                m_current_title = m_last_stream_title.is_empty() ? pfc::string8("未知标题") : m_last_stream_title;
+                m_current_artist = m_last_stream_artist.is_empty() ? pfc::string8("未知艺术家") : m_last_stream_artist;
             } else {
                 if (!is_stream) {
                     m_last_stream_title.reset();
@@ -1049,8 +1049,8 @@ void control_panel::update_stream_metadata(const file_info & p_info) {
 
         m_last_stream_artist = artist;
         m_last_stream_title = title;
-        m_current_artist = artist.is_empty() ? "未知艺术家" : artist;
-        m_current_title = title.is_empty() ? "未知标题" : title;
+        m_current_artist = artist.is_empty() ? pfc::string8("未知艺术家") : artist;
+        m_current_title = title.is_empty() ? pfc::string8("未知标题") : title;
 
         // Request new artwork from foo_artwork
         if (is_artwork_bridge_available() && !is_bypass_stream()) {

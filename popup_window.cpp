@@ -706,8 +706,8 @@ void popup_window::update_stream_metadata(const file_info & p_info) {
         if (stream_id == m_last_track_path) return;
         m_last_track_path = stream_id;
 
-        m_current_title = title.is_empty() ? "未知标题" : title;
-        m_current_artist = artist.is_empty() ? "未知艺术家" : artist;
+        m_current_title = title.is_empty() ? pfc::string8("未知标题") : title;
+        m_current_artist = artist.is_empty() ? pfc::string8("未知艺术家") : artist;
         m_is_stream = true;
 
         // Show popup notification for stream track change
