@@ -1,1 +1,0 @@
-E:\foo_traycontrols\lib\foobar2000_SDK\foobar2000\shared\Release\shared.dll
