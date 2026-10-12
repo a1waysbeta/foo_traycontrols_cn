@@ -1,73 +1,163 @@
 name: Build DLL
 
+# 手动触发（Actions 页面 -> Run workflow）
 on:
   workflow_dispatch:
 
 jobs:
-  build-x86:
-    runs-on: windows-2022  # 使用 windows-2022，默认包含 ATL
-    name: Build x86
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v6
-
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v3
-
-    - name: Build x86
-      run: msbuild foo_traycontrols.vcxproj /p:Configuration=Release /p:Platform=Win32 /p:PlatformToolset=v143
-
-    - name: Upload x86 DLL
-      uses: actions/upload-artifact@v7
-      with:
-        name: foo_traycontrols_x86
-        path: Release/foo_traycontrols.dll
-        if-no-files-found: error
-
-  build-x64:
+# =============================================================================
+# 1. Build Win32 (x86) + x64  (matrix)
+# =============================================================================
+  build-multi-platform:
+    # 固定 windows-2022：自带 VS 2022 工具链与 ATL
     runs-on: windows-2022
-    name: Build x64
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v6
+    strategy:
+      matrix:
+        platform: [x86, x64]
+        include:
+          - platform: x86
+            msbuild_platform: Win32
+            outdir_platform: x86
+            dll_path: Release/foo_traycontrols.dll
+          - platform: x64
+            msbuild_platform: x64
+            outdir_platform: x64
+            dll_path: x64/Release/foo_traycontrols.dll
+      fail-fast: false
 
+    steps:
+    # -------------------------------------------------------------------------
+    # 1. Checkout Repositories（全部 fetch-depth: 1 浅拉取）
+    # -------------------------------------------------------------------------
+    - name: Checkout foo_traycontrols
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 1
+
+    # 仓库历史版本在 lib\foobar2000_SDK 下携带完整的本地 SDK 副本
+    # （含预编译 .lib）。本 workflow 改用远程 SDK 源码现场编译，
+    # 先删除本地副本，避免 checkout 远程仓库时新旧文件混杂。
+    - name: Remove bundled local SDK
+      shell: pwsh
+      run: Remove-Item -Recurse -Force lib -ErrorAction SilentlyContinue
+
+    # foobar2000-sdk-modified 使用 Commits169-SDK-2026-10-01 版本
+    # PFC 使用 Commits120-SDK-2026-10-01 版本（与 foo_nowbar 相同）
+    - name: Checkout Foobar2000 SDK
+      uses: actions/checkout@v6
+      with:
+        repository: reupen/foobar2000-sdk-modified
+        ref: f56be547d34468da2ff47fcf49eacee41b6f42b1
+        path: lib/foobar2000_SDK/foobar2000
+        fetch-depth: 1
+
+    - name: Checkout PFC
+      uses: actions/checkout@v6
+      with:
+        repository: reupen/pfc-modified
+        ref: 75053edf649b41b2202fcc7b9c5c3848a0e9a8cb
+        path: lib/foobar2000_SDK/pfc
+        fetch-depth: 1
+
+    # -------------------------------------------------------------------------
+    # 2. Build Environment Setup
+    # -------------------------------------------------------------------------
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v3
 
-    - name: Build x64
-      run: msbuild foo_traycontrols.vcxproj /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143
+    - name: Fix Platform Toolset for GitHub Actions
+      # 远程 SDK 项目的 vcxproj 默认 v145，windows-2022 runner 只有 v143。
+      shell: pwsh
+      run: |
+        Get-ChildItem -Path lib -Recurse -Filter *.vcxproj | ForEach-Object {
+          $content = Get-Content $_.FullName -Raw
+          if ($content -match 'v14[05]') {
+            Write-Host "Fixing: $($_.Name)"
+            $content -replace 'v14[05]', 'v143' | Set-Content $_.FullName -NoNewline
+          }
+        }
 
-    - name: Upload x64 DLL
+    # -------------------------------------------------------------------------
+    # 3. Build Dependencies（shared 无需构建：reupen fork 自带预编译的
+    #    shared-Win32.lib / shared-x64.lib，组件 vcxproj 直接链接它们。
+    #    组件源码不引用 libPPUI / helpers，无需下载官方 SDK 的 libPPUI。）
+    # -------------------------------------------------------------------------
+    - name: Build PFC (${{ matrix.platform }})
+      shell: cmd
+      run: |
+        msbuild lib\foobar2000_SDK\pfc\pfc.vcxproj ^
+          /p:Configuration=Release ^
+          /p:Platform=${{ matrix.msbuild_platform }} ^
+          /p:OutDir=${{ matrix.outdir_platform }}\pfc\
+
+    - name: Build Foobar2000 SDK (${{ matrix.platform }})
+      shell: cmd
+      run: |
+        msbuild lib\foobar2000_SDK\foobar2000\SDK\foobar2000_SDK.vcxproj ^
+          /p:Configuration=Release ^
+          /p:Platform=${{ matrix.msbuild_platform }} ^
+          /p:OutDir=${{ matrix.outdir_platform }}\foobar2000_SDK\
+
+    # -------------------------------------------------------------------------
+    # 4. Build Component
+    # -------------------------------------------------------------------------
+    - name: Build foo_traycontrols (${{ matrix.platform }})
+      shell: cmd
+      run: |
+        msbuild foo_traycontrols.vcxproj ^
+          /p:Configuration=Release ^
+          /p:Platform=${{ matrix.msbuild_platform }}
+
+    - name: Upload DLL (${{ matrix.platform }})
       uses: actions/upload-artifact@v7
       with:
-        name: foo_traycontrols_x64
-        path: x64/Release/foo_traycontrols.dll
+        name: foo_traycontrols_${{ matrix.platform }}
+        path: ${{ matrix.dll_path }}
         if-no-files-found: error
 
+# =============================================================================
+# 2. Package → ONE .fb2k-component (zip with renamed extension)
+# =============================================================================
   package:
     runs-on: windows-2022
     name: Package Component
-    needs: [build-x86, build-x64]
-    
+    needs: build-multi-platform
+
     steps:
+    # x86 DLL 放在组件包根目录
     - name: Download x86 DLL
       uses: actions/download-artifact@v8
       with:
         name: foo_traycontrols_x86
         path: component_temp
 
+    # x64 DLL 放在顶层 x64\ 子目录
     - name: Download x64 DLL
       uses: actions/download-artifact@v8
       with:
         name: foo_traycontrols_x64
         path: component_temp/x64
 
-    - name: Create .fb2k-component archive
+    - name: Verify component layout
+      shell: cmd
       run: |
-        # 创建 ZIP 文件并重命名为 .fb2k-component
-        Compress-Archive -Path "component_temp/*" -DestinationPath "foo_traycontrols.fb2k-component" -CompressionLevel Optimal
+        echo ===== expected structure =====
+        echo   foo_traycontrols.dll
+        echo   x64\foo_traycontrols.dll
+        echo ===== actual structure =====
+        dir component_temp /s /b
+
+    - name: Create .fb2k-component archive
+      shell: powershell
+      run: |
+        $zipPath = "foo_traycontrols.zip"
+        if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
+        Compress-Archive `
+          -Path "component_temp\*" `
+          -DestinationPath $zipPath `
+          -CompressionLevel Optimal
+        Rename-Item -Path $zipPath -NewName "foo_traycontrols.fb2k-component" -Force
+        Get-ChildItem foo_traycontrols.fb2k-component | Select-Object Name, Length
 
     - name: Upload Final Component Artifact
       uses: actions/upload-artifact@v7
